@@ -63,6 +63,26 @@ dependencies {
     annotationProcessor("com.google.dagger:hilt-compiler:$hilt_version")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
+    //Retrofit
+    val retrofit_version = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:$retrofit_version")
+
+    //Room
+    val room_version = "2.4.3"
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+    implementation("androidx.room:room-paging:$room_version")
+
+    //Paging 3
+    val paging_version = "3.1.1"
+    implementation("androidx.paging:paging-runtime:$paging_version")
+    implementation("androidx.paging:paging-compose:1.0.0-alpha17")
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
