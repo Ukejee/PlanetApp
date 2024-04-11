@@ -1,6 +1,8 @@
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("com.android.application")
+    id("kotlin-android")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -58,10 +60,9 @@ dependencies {
     implementation(libs.androidx.appcompat.resources)
 
     //Hilt
-    val hilt_version = "2.44"
+    val hilt_version = "2.51.1"
     implementation("com.google.dagger:hilt-android:$hilt_version")
-    annotationProcessor("com.google.dagger:hilt-compiler:$hilt_version")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    kapt("com.google.dagger:hilt-compiler:$hilt_version")
 
     //Retrofit
     val retrofit_version = "2.9.0"
@@ -72,16 +73,19 @@ dependencies {
     implementation("com.squareup.retrofit2:adapter-rxjava2:$retrofit_version")
 
     //Room
-    val room_version = "2.4.3"
+    val room_version = "2.6.1"
     implementation("androidx.room:room-runtime:$room_version")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
     implementation("androidx.room:room-paging:$room_version")
+    implementation("androidx.room:room-rxjava2:$room_version")
 
     //Paging 3
     val paging_version = "3.1.1"
     implementation("androidx.paging:paging-runtime:$paging_version")
-    implementation("androidx.paging:paging-compose:1.0.0-alpha17")
+    implementation("androidx.paging:paging-compose:3.2.1")
+
+    implementation("androidx.compose.material3:material3:1.2.1")
 
 
     implementation(libs.androidx.core.ktx)
@@ -99,4 +103,9 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }

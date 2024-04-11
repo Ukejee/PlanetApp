@@ -1,9 +1,7 @@
-package com.ukejee.planetapp
+package com.ukejee.planetapp.data
 
 import android.content.Context
 import androidx.room.Room
-import com.ukejee.planetapp.data.ApiConstants
-import com.ukejee.planetapp.data.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,8 +29,7 @@ object AppDataModule {
             context,
             AppDatabase::class.java,
             "planet.db"
-        )
-            .build()
+        ).build()
     }
 
     @Singleton
