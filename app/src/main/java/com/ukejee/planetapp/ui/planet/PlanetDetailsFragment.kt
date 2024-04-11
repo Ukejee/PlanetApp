@@ -10,15 +10,15 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModelProvider
-import com.ukejee.planetapp.databinding.FragmentPlanetListBinding
+import com.ukejee.planetapp.databinding.FragmentPlanetDetailsBinding
 import com.ukejee.planetapp.theme.PlanetAppTheme
-import com.ukejee.planetapp.util.extensions.replaceFragment
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
-class PlanetListFragment : Fragment() {
 
-    private var _binding: FragmentPlanetListBinding? = null
+@AndroidEntryPoint
+class PlanetDetailsFragment : Fragment() {
+
+    private var _binding: FragmentPlanetDetailsBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var  viewModel: PlanetViewModel
@@ -28,7 +28,7 @@ class PlanetListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val baseInflater = LayoutInflater.from(requireActivity())
-        _binding = FragmentPlanetListBinding.inflate(baseInflater, container, false)
+        _binding = FragmentPlanetDetailsBinding.inflate(baseInflater, container, false)
         return binding.root
     }
 
@@ -42,15 +42,15 @@ class PlanetListFragment : Fragment() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color.White
                 ) {
-                    PlanetListScreen(viewModel = viewModel)
+                    PlanetDetailsScreen(viewModel = viewModel)
                 }
             }
         }
-
     }
 
     private fun setupViewModel() {
         viewModel = ViewModelProvider(requireActivity())[PlanetViewModel::class.java]
-        viewModel.onPlanetClicked = { replaceFragment(PlanetDetailsFragment())}
+        viewModel.onBackPressed = { requireActivity().onBackPressedDispatcher.onBackPressed() }
     }
+
 }

@@ -9,6 +9,7 @@ import com.ukejee.planetapp.data.planet.cache.model.CachedPlanet
 import com.ukejee.planetapp.domain.PlanetsRemoteMediator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,4 +31,10 @@ class PlanetViewModel @Inject constructor(
             },
             remoteMediator = planetsRemoteMediator
         ).flow
+
+    val selectedPlanet = MutableStateFlow<CachedPlanet?>(null)
+
+    var onPlanetClicked: (() -> Unit)? = null
+
+    var onBackPressed: (() -> Unit)? = null
 }
