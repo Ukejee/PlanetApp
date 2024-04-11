@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import com.ukejee.planetapp.databinding.FragmentPlanetListBinding
 import com.ukejee.planetapp.theme.PlanetAppTheme
@@ -39,7 +40,7 @@ class PlanetListFragment : Fragment() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = Color.White
                 ) {
                     PlanetListScreen(viewModel = viewModel)
                 }

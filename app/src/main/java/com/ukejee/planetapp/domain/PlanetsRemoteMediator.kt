@@ -53,22 +53,26 @@ class PlanetsRemoteMediator (
         try {
             val apiResponse = planetNetworkDataSource.getAllPlanets(page)
 
+
             val planets = CachedPlanetAdapter.toCachedPlanets(apiResponse)
-            val endOfPaginationReached = planets.isEmpty()
+            val endOfPaginationReached = apiResponse.next.isNullOrEmpty() //planets.isEmpty()
+
 
             if (loadType == LoadType.REFRESH) {
                 planetLocalDataSource.removeAllRemoteKeys()
                 planetLocalDataSource.removeAllPlanets()
-
-                val prevKey = if (page > 1) page - 1 else null
-                val nextKey = if (endOfPaginationReached) null else page + 1
-                val remoteKeys = planets.map {
-                    RemoteKeys(planetName = it.name, prevKey = prevKey, currentPage = page, nextKey = nextKey)
-                }
-
-                planetLocalDataSource.saveRemoteKeys(remoteKeys)
-                planetLocalDataSource.savePlanets(planets.onEachIndexed { _, cachedPlanet -> cachedPlanet.page = page })
             }
+
+            val prevKey = if (page > 1) page - 1 else null
+            val nextKey = if (endOfPaginationReached) null else page + 1
+            val remoteKeys = planets.map {
+                RemoteKeys(planetName = it.name, prevKey = prevKey, currentPage = page, nextKey = nextKey)
+            }
+
+            planetLocalDataSource.saveRemoteKeys(remoteKeys)
+            planetLocalDataSource.savePlanets(planets.onEachIndexed { _, cachedPlanet -> cachedPlanet.page = page })
+
+
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (error: IOException) {
             return MediatorResult.Error(error)

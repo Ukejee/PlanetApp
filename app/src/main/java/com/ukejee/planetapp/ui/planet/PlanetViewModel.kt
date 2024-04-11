@@ -21,8 +21,9 @@ class PlanetViewModel @Inject constructor(
         Pager(
             config = PagingConfig(
                 pageSize = 10,
-                prefetchDistance = 10,
+                prefetchDistance = 8,
                 initialLoadSize = 10,
+                maxSize = 60
             ),
             pagingSourceFactory = {
                 planetsRemoteMediator.getPlanets()
