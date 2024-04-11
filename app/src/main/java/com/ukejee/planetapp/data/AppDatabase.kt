@@ -4,11 +4,11 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.ukejee.planetapp.data.planet.cache.dao.PlanetDao
 import com.ukejee.planetapp.data.planet.cache.dao.RemoteKeysDao
-import com.ukejee.planetapp.data.planet.cache.model.CachedPlanet
+import com.ukejee.planetapp.data.planet.cache.model.Planet
 import com.ukejee.planetapp.data.planet.cache.model.RemoteKeys
 
 @Database(
-    entities = [CachedPlanet::class, RemoteKeys::class],
+    entities = [Planet::class, RemoteKeys::class],
     version = 1,
     exportSchema = false
 )

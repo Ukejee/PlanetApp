@@ -1,12 +1,12 @@
 package com.ukejee.planetapp.data.planet.cache.adapter
 
 import com.ukejee.planetapp.data.planet.api.model.FetchAllPlanetsApiResponse
-import com.ukejee.planetapp.data.planet.cache.model.CachedPlanet
+import com.ukejee.planetapp.data.planet.cache.model.Planet
 import java.net.URI
 
-object CachedPlanetAdapter {
+object PlanetAdapter {
 
-    fun toCachedPlanets(apiResponse: FetchAllPlanetsApiResponse): List<CachedPlanet> {
+    fun toPlanets(apiResponse: FetchAllPlanetsApiResponse): List<Planet> {
         val currentPage = if (!apiResponse.next.isNullOrEmpty()) {
             val nextPage = findParameterValue(URI(apiResponse.next), "page")?.toInt()
             nextPage?.minus(1)
@@ -16,7 +16,7 @@ object CachedPlanetAdapter {
         }
 
         return apiResponse.results.map {
-            CachedPlanet(
+            Planet(
                 climate = it.climate,
                 diameter = it.diameter,
                 gravity = it.gravity,

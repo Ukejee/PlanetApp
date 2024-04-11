@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "planets")
-data class CachedPlanet(
+data class Planet(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val climate: String,

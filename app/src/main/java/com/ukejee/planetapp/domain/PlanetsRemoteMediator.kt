@@ -5,8 +5,8 @@ import androidx.paging.LoadType
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import com.ukejee.planetapp.data.planet.cache.adapter.CachedPlanetAdapter
-import com.ukejee.planetapp.data.planet.cache.model.CachedPlanet
+import com.ukejee.planetapp.data.planet.cache.adapter.PlanetAdapter
+import com.ukejee.planetapp.data.planet.cache.model.Planet
 import com.ukejee.planetapp.data.planet.cache.model.RemoteKeys
 import com.ukejee.planetapp.data.planet.datasource.PlanetLocalDataSource
 import com.ukejee.planetapp.data.planet.datasource.PlanetRemoteDataSource
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
 class PlanetsRemoteMediator (
     private val planetNetworkDataSource: PlanetRemoteDataSource,
     private val planetLocalDataSource: PlanetLocalDataSource
-) : RemoteMediator<Int, CachedPlanet>() {
+) : RemoteMediator<Int, Planet>() {
 
     override suspend fun initialize(): InitializeAction {
         val cacheTimeout = TimeUnit.MILLISECONDS.convert(1, TimeUnit.HOURS)
@@ -31,7 +31,7 @@ class PlanetsRemoteMediator (
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, CachedPlanet>
+        state: PagingState<Int, Planet>
     ): MediatorResult {
         val page: Int = when(loadType) {
             LoadType.REFRESH -> {
@@ -54,7 +54,7 @@ class PlanetsRemoteMediator (
             val apiResponse = planetNetworkDataSource.getAllPlanets(page)
 
 
-            val planets = CachedPlanetAdapter.toCachedPlanets(apiResponse)
+            val planets = PlanetAdapter.toPlanets(apiResponse)
             val endOfPaginationReached = apiResponse.next.isNullOrEmpty() //planets.isEmpty()
 
 
@@ -81,7 +81,7 @@ class PlanetsRemoteMediator (
         }
     }
 
-    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, CachedPlanet>): RemoteKeys? {
+    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, Planet>): RemoteKeys? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.name?.let { name ->
                 planetLocalDataSource.getRemoteKey(name)
@@ -89,7 +89,7 @@ class PlanetsRemoteMediator (
         }
     }
 
-    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, CachedPlanet>): RemoteKeys? {
+    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, Planet>): RemoteKeys? {
         return state.pages.firstOrNull {
             it.data.isNotEmpty()
         }?.data?.firstOrNull()?.let { planet ->
@@ -97,7 +97,7 @@ class PlanetsRemoteMediator (
         }
     }
 
-    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, CachedPlanet>): RemoteKeys? {
+    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, Planet>): RemoteKeys? {
         return state.pages.lastOrNull {
             it.data.isNotEmpty()
         }?.data?.lastOrNull()?.let { planet ->
@@ -105,7 +105,7 @@ class PlanetsRemoteMediator (
         }
     }
 
-    fun getPlanets(): PagingSource<Int, CachedPlanet> {
+    fun getPlanets(): PagingSource<Int, Planet> {
         return planetLocalDataSource.getPlanets()
     }
 }

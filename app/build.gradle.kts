@@ -72,6 +72,9 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
     implementation("com.squareup.retrofit2:adapter-rxjava2:$retrofit_version")
 
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.9.0")
+    androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.9.0")
+
     //Room
     val room_version = "2.6.1"
     implementation("androidx.room:room-runtime:$room_version")
@@ -87,6 +90,12 @@ dependencies {
 
     implementation("androidx.compose.material3:material3:1.2.1")
 
+
+    //    instrumentation test
+    androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
+
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation("io.mockk:mockk-android:1.11.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
